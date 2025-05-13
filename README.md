@@ -1,5 +1,8 @@
 # 📊 Sistema SOA para Análise de Tendência de Nomes no Brasil
 
+### NOME: João Antônio Garcia ROlo
+### RA: 220143992
+
 ## 🧠 Objetivo
 
 Desenvolver um sistema baseado em arquitetura SOA (Service-Oriented Architecture) para análise da tendência de nomes no Brasil, utilizando dados públicos disponibilizados pelo IBGE por meio de Web Services. O sistema deve ser composto por dois serviços e um cliente consumidor desses serviços.
@@ -36,6 +39,3 @@ Desenvolver um sistema baseado em arquitetura SOA (Service-Oriented Architecture
   - [https://servicodados.ibge.gov.br/api/v2/censos/nomes/](https://servicodados.ibge.gov.br/api/v2/censos/nomes/)
 - Utilizar padrões de projeto voltados a SOA (Separação de serviços e cliente).
 - O cliente pode ser implementado com Node.js (CLI ou web frontend simples).
-
-## 📁 Estrutura Sugerida
-
