@@ -1,7 +1,11 @@
 # 📊 Sistema SOA para Análise de Tendência de Nomes no Brasil
 
-### NOME: João Antônio Garcia ROlo
-### RA: 220143992
+## Alunos
+
+##### João Antônio Garcia- 220143992
+##### Vinicius Vilela - 22276395-2
+##### Ricardo Francisco - 22019957-2 
+
 
 ## 🧠 Objetivo
 
