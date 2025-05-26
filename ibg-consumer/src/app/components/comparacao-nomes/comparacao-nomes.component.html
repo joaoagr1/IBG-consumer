@@ -1,60 +1,84 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h2>Comparação de Nomes</h2>
-        </div>
-        <div class="card-body">
-          <div class="form-container">
-            <form (ngSubmit)="compararNomes()">
-              <div class="form-group">
-                <label for="nome1">Primeiro Nome</label>
-                <input
-                  type="text"
-                  id="nome1"
-                  [(ngModel)]="nome1"
-                  name="nome1"
-                  placeholder="Digite o primeiro nome"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label for="nome2">Segundo Nome</label>
-                <input
-                  type="text"
-                  id="nome2"
-                  [(ngModel)]="nome2"
-                  name="nome2"
-                  placeholder="Digite o segundo nome"
-                  required
-                >
-              </div>
-              <div class="form-group">
-                <label for="sexo">Sexo</label>
-                <select
-                  id="sexo"
-                  [(ngModel)]="sexo"
-                  name="sexo"
-                >
-                  <option value="">Todos</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Feminino</option>
-                </select>
-              </div>
-              <button type="submit">Comparar</button>
-            </form>
+<div class="container">
+  <div class="form-container">
+    <h2>Comparação de Nomes</h2>
+    <form (ngSubmit)="compararNomes()">
+      <div class="form-group">
+        <label for="nome1">Primeiro Nome:</label>
+        <input type="text" id="nome1" [(ngModel)]="nome1" name="nome1" required>
+      </div>
+      <div class="form-group">
+        <label for="nome2">Segundo Nome:</label>
+        <input type="text" id="nome2" [(ngModel)]="nome2" name="nome2" required>
+      </div>
+      <div class="form-group">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" [(ngModel)]="sexo" name="sexo" required>
+          <option value="">Selecione</option>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+      </div>
+      <button type="submit">Comparar</button>
+    </form>
+  </div>
 
-            <div class="chart-container">
-              <canvas baseChart
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="'line'">
-              </canvas>
-            </div>
-          </div>
-        </div>
+  <div class="chart-container" *ngIf="lineChartData.datasets[0].data.length > 0">
+    <h3>Gráfico de Comparação</h3>
+    <canvas baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="'line'">
+    </canvas>
+  </div>
+
+  <ng-container *ngIf="nome1 && nome2 && dadosComparacao[nome1] && dadosComparacao[nome2]">
+    <div class="tables-container" *ngIf="dadosComparacao[nome1].length > 0 && dadosComparacao[nome2].length > 0">
+      <div class="table-section">
+        <h3>Dados do Primeiro Nome</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Frequência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dadosComparacao[nome1]">
+              <td>{{ item.periodo }}</td>
+              <td>{{ item.frequencia }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-section">
+        <h3>Dados do Segundo Nome</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Frequência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dadosComparacao[nome2]">
+              <td>{{ item.periodo }}</td>
+              <td>{{ item.frequencia }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
+
+    <div class="json-container">
+      <div class="json-section">
+        <h3>JSON do Primeiro Nome</h3>
+        <pre>{{ dadosComparacao[nome1] | json }}</pre>
+      </div>
+      <div class="json-section">
+        <h3>JSON do Segundo Nome</h3>
+        <pre>{{ dadosComparacao[nome2] | json }}</pre>
+      </div>
+    </div>
+  </ng-container>
 </div> 

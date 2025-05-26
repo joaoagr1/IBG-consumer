@@ -1,33 +1,37 @@
-import { Component } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IbgeService } from '../../services/ibge.service';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { IbgeService } from '../../services/ibge.service';
+import { RankingLocalidade } from '../../services/ibge.service';
 
 @Component({
   selector: 'app-ranking-localidade',
   standalone: true,
-  imports: [NgChartsModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgChartsModule],
   templateUrl: './ranking-localidade.component.html',
   styleUrls: ['./ranking-localidade.component.css']
 })
-export class RankingLocalidadeComponent {
+export class RankingLocalidadeComponent implements OnInit {
   localidade: string = '';
   sexo: string = '';
+  dadosRanking: RankingLocalidade[] = [];
 
-  barChartData: ChartConfiguration<'bar'>['data'] = {
+  public barChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: [
       {
         data: [],
         label: 'Frequência',
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'rgba(148,159,177,1)'
+        backgroundColor: 'rgba(75, 192, 192, 0.3)',
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 1
       }
     ]
   };
 
-  barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -44,40 +48,34 @@ export class RankingLocalidadeComponent {
           text: 'Nome'
         }
       }
-    },
-    plugins: {
-      legend: { display: true },
-      tooltip: {
-        mode: 'index',
-        intersect: false
-      }
     }
   };
 
   constructor(private ibgeService: IbgeService) {}
 
-  buscarRanking() {
-    if (!this.localidade) {
-      alert('Por favor, preencha a localidade');
-      return;
-    }
+  ngOnInit(): void {}
+
+  buscarRanking(): void {
+    if (!this.localidade) return;
 
     this.ibgeService.getRankingLocalidade(this.localidade, this.sexo).subscribe(
-      ranking => {
-        const nomes = ranking.map((item: any) => item.nome);
-        const frequencias = ranking.map((item: any) => item.frequencia);
-
+      (data: RankingLocalidade[]) => {
+        this.dadosRanking = data;
         this.barChartData = {
-          labels: nomes,
+          labels: data.map(item => item.nome),
           datasets: [
             {
-              data: frequencias,
+              data: data.map(item => item.frequencia),
               label: 'Frequência',
-              backgroundColor: 'rgba(148,159,177,0.2)',
-              borderColor: 'rgba(148,159,177,1)'
+              backgroundColor: 'rgba(75, 192, 192, 0.3)',
+              borderColor: 'rgb(75, 192, 192)',
+              borderWidth: 1
             }
           ]
         };
+      },
+      (error: Error) => {
+        console.error('Erro ao buscar dados:', error);
       }
     );
   }

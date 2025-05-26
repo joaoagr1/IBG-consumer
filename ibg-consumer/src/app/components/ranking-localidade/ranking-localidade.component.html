@@ -42,6 +42,24 @@
               [type]="'bar'">
             </canvas>
           </div>
+
+          <div class="table-container" *ngIf="dadosRanking.length > 0">
+            <h3>Dados do Ranking</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Frequência</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dadosRanking">
+                  <td>{{item.nome}}</td>
+                  <td>{{item.frequencia}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

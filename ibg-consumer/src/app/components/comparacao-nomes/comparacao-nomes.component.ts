@@ -1,59 +1,49 @@
-import { Component } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IbgeService } from '../../services/ibge.service';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { IbgeService } from '../../services/ibge.service';
+import { EvolucaoNome } from '../../services/ibge.service';
 
 @Component({
   selector: 'app-comparacao-nomes',
   standalone: true,
-  imports: [NgChartsModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgChartsModule],
   templateUrl: './comparacao-nomes.component.html',
   styleUrls: ['./comparacao-nomes.component.css']
 })
-export class ComparacaoNomesComponent {
+export class ComparacaoNomesComponent implements OnInit {
   nome1: string = '';
   nome2: string = '';
   sexo: string = '';
+  dadosComparacao: { [key: string]: EvolucaoNome[] } = {};
 
-  lineChartData: ChartConfiguration<'line'>['data'] = {
+  public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
     datasets: [
       {
         data: [],
-        label: 'Nome 1',
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: 'origin',
-        tension: 0.4
+        label: '',
+        fill: true,
+        tension: 0.5,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.3)'
       },
       {
         data: [],
-        label: 'Nome 2',
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)',
-        fill: 'origin',
-        tension: 0.4
+        label: '',
+        fill: true,
+        tension: 0.5,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.3)'
       }
     ]
   };
 
-  lineChartOptions: ChartConfiguration<'line'>['options'] = {
+  public lineChartOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
     maintainAspectRatio: false,
-    elements: {
-      line: {
-        tension: 0.4
-      }
-    },
     scales: {
       y: {
         beginAtZero: true,
@@ -65,66 +55,84 @@ export class ComparacaoNomesComponent {
       x: {
         title: {
           display: true,
-          text: 'Década'
+          text: 'Período'
         }
-      }
-    },
-    plugins: {
-      legend: { display: true },
-      tooltip: {
-        mode: 'index',
-        intersect: false
       }
     }
   };
 
   constructor(private ibgeService: IbgeService) {}
 
-  compararNomes() {
-    if (!this.nome1 || !this.nome2) {
-      alert('Por favor, preencha os dois nomes');
-      return;
-    }
+  ngOnInit(): void {
+    // Inicializa os dados vazios para os nomes
+    this.dadosComparacao = {
+      [this.nome1]: [],
+      [this.nome2]: []
+    };
+  }
+
+  compararNomes(): void {
+    if (!this.nome1 || !this.nome2 || !this.sexo) return;
+
+    // Limpa os dados anteriores
+    this.dadosComparacao = {};
+    this.lineChartData = {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          label: '',
+          fill: true,
+          tension: 0.5,
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.3)'
+        },
+        {
+          data: [],
+          label: '',
+          fill: true,
+          tension: 0.5,
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.3)'
+        }
+      ]
+    };
 
     this.ibgeService.getEvolucaoNome(this.nome1, this.sexo).subscribe(
-      evolucao1 => {
+      (data1: EvolucaoNome[]) => {
+        this.dadosComparacao[this.nome1] = data1;
         this.ibgeService.getEvolucaoNome(this.nome2, this.sexo).subscribe(
-          evolucao2 => {
-            const labels = evolucao1.map(item => item.periodo);
-            const dados1 = evolucao1.map(item => item.frequencia);
-            const dados2 = evolucao2.map(item => item.frequencia);
-
+          (data2: EvolucaoNome[]) => {
+            this.dadosComparacao[this.nome2] = data2;
             this.lineChartData = {
-              labels: labels,
+              labels: data1.map(item => item.periodo),
               datasets: [
                 {
-                  data: dados1,
+                  data: data1.map(item => item.frequencia),
                   label: this.nome1,
-                  backgroundColor: 'rgba(148,159,177,0.2)',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-                  fill: 'origin',
-                  tension: 0.4
+                  fill: true,
+                  tension: 0.5,
+                  borderColor: 'rgb(75, 192, 192)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.3)'
                 },
                 {
-                  data: dados2,
+                  data: data2.map(item => item.frequencia),
                   label: this.nome2,
-                  backgroundColor: 'rgba(77,83,96,0.2)',
-                  borderColor: 'rgba(77,83,96,1)',
-                  pointBackgroundColor: 'rgba(77,83,96,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(77,83,96,1)',
-                  fill: 'origin',
-                  tension: 0.4
+                  fill: true,
+                  tension: 0.5,
+                  borderColor: 'rgb(255, 99, 132)',
+                  backgroundColor: 'rgba(255, 99, 132, 0.3)'
                 }
               ]
             };
+          },
+          (error: Error) => {
+            console.error('Erro ao buscar dados do segundo nome:', error);
           }
         );
+      },
+      (error: Error) => {
+        console.error('Erro ao buscar dados do primeiro nome:', error);
       }
     );
   }

@@ -16,6 +16,7 @@ import { EvolucaoNome } from '../../services/ibge.service';
 export class NomeEvolucaoComponent implements OnInit {
   nome: string = '';
   sexo: string = '';
+  dadosEvolucao: EvolucaoNome[] = [];
   
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
@@ -60,9 +61,20 @@ export class NomeEvolucaoComponent implements OnInit {
 
     this.ibgeService.getEvolucaoNome(this.nome, this.sexo).subscribe(
       (data: EvolucaoNome[]) => {
-        this.lineChartData.labels = data.map(item => item.periodo);
-        this.lineChartData.datasets[0].data = data.map(item => item.frequencia);
-        this.lineChartData.datasets[0].label = `Frequência do nome ${this.nome}`;
+        this.dadosEvolucao = data;
+        this.lineChartData = {
+          labels: data.map(item => item.periodo),
+          datasets: [
+            {
+              data: data.map(item => item.frequencia),
+              label: `Frequência do nome ${this.nome}`,
+              fill: true,
+              tension: 0.5,
+              borderColor: 'rgb(75, 192, 192)',
+              backgroundColor: 'rgba(75, 192, 192, 0.3)'
+            }
+          ]
+        };
       },
       (error: Error) => {
         console.error('Erro ao buscar dados:', error);
