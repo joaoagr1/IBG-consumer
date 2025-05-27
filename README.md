@@ -86,6 +86,8 @@ A aplicação estará disponível em `http://localhost:4200`
 src/
 ├── app/
 │   ├── components/
+│   │   ├── /common     
+│   │       |   ├── /base-chart/     # Componente base para criação do formulário e gráficos
 │   │   ├── comparacao-nomes/     # Componente para comparação de nomes
 │   │   ├── ranking-localidade/   # Componente para ranking por região
 │   │   └── nome-evolucao/        # Componente para evolução temporal
@@ -108,7 +110,7 @@ src/
 5. Abra um Pull Request
 
 ## 📝 Licença
-Este projeto está sob a licença [inserir tipo de licença].
+Este projeto está sob a licença MIT License.
 
 ## ✨ Agradecimentos
 - Equipe de desenvolvimento
