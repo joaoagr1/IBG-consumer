@@ -99,16 +99,16 @@ export class ComparacaoNomesComponent implements OnInit {
     };
 
     this.ibgeService.getEvolucaoNome(this.nome1, this.sexo).subscribe(
-      (data1: EvolucaoNome[]) => {
+      (data1: any[]) => {
         this.dadosComparacao[this.nome1] = data1;
         this.ibgeService.getEvolucaoNome(this.nome2, this.sexo).subscribe(
-          (data2: EvolucaoNome[]) => {
+          (data2: any[]) => {
             this.dadosComparacao[this.nome2] = data2;
             this.lineChartData = {
-              labels: data1.map(item => item.periodo),
+              labels: data1[0].res.map((item: any) => item.periodo),
               datasets: [
                 {
-                  data: data1.map(item => item.frequencia),
+                  data: data1[0].res.map((item: any) => item.frequencia),
                   label: this.nome1,
                   fill: true,
                   tension: 0.5,
@@ -116,7 +116,7 @@ export class ComparacaoNomesComponent implements OnInit {
                   backgroundColor: 'rgba(75, 192, 192, 0.3)'
                 },
                 {
-                  data: data2.map(item => item.frequencia),
+                  data: data2[0].res.map((item: any) => item.frequencia),
                   label: this.nome2,
                   fill: true,
                   tension: 0.5,
@@ -136,4 +136,4 @@ export class ComparacaoNomesComponent implements OnInit {
       }
     );
   }
-} 
+}

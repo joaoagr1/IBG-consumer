@@ -17,7 +17,7 @@ export class NomeEvolucaoComponent implements OnInit {
   nome: string = '';
   sexo: string = '';
   dadosEvolucao: EvolucaoNome[] = [];
-  
+
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
     datasets: [
@@ -60,13 +60,14 @@ export class NomeEvolucaoComponent implements OnInit {
     if (!this.nome) return;
 
     this.ibgeService.getEvolucaoNome(this.nome, this.sexo).subscribe(
-      (data: EvolucaoNome[]) => {
+      (data: any) => {
         this.dadosEvolucao = data;
+        console.log(data)
         this.lineChartData = {
-          labels: data.map(item => item.periodo),
+          labels: data[0].res.map((item: any) => item.periodo),
           datasets: [
             {
-              data: data.map(item => item.frequencia),
+              data: data[0].res.map((item: any) => item.frequencia),
               label: `Frequência do nome ${this.nome}`,
               fill: true,
               tension: 0.5,
@@ -81,4 +82,4 @@ export class NomeEvolucaoComponent implements OnInit {
       }
     );
   }
-} 
+}

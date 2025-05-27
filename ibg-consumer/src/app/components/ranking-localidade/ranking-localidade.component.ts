@@ -59,13 +59,16 @@ export class RankingLocalidadeComponent implements OnInit {
     if (!this.localidade) return;
 
     this.ibgeService.getRankingLocalidade(this.localidade, this.sexo).subscribe(
-      (data: RankingLocalidade[]) => {
+      (data: any[]) => {
+
         this.dadosRanking = data;
+        const resultados = data[0].res.splice(0, 3);
+
         this.barChartData = {
-          labels: data.map(item => item.nome),
+          labels: resultados.map((item: any) => item.nome),
           datasets: [
             {
-              data: data.map(item => item.frequencia),
+              data: resultados.map((item: any) => item.frequencia),
               label: 'Frequência',
               backgroundColor: 'rgba(75, 192, 192, 0.3)',
               borderColor: 'rgb(75, 192, 192)',
@@ -78,5 +81,6 @@ export class RankingLocalidadeComponent implements OnInit {
         console.error('Erro ao buscar dados:', error);
       }
     );
+
   }
-} 
+}

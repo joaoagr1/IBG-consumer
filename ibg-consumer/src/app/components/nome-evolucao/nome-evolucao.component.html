@@ -26,7 +26,6 @@
                   [(ngModel)]="sexo"
                   name="sexo"
                 >
-                  <option value="">Todos</option>
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
                 </select>
@@ -42,31 +41,8 @@
               [type]="'line'">
             </canvas>
           </div>
-
-          <div class="table-container" *ngIf="dadosEvolucao.length > 0">
-            <h3>Dados Detalhados</h3>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Período</th>
-                  <th>Frequência</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of dadosEvolucao">
-                  <td>{{item.periodo}}</td>
-                  <td>{{item.frequencia}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="json-container" *ngIf="dadosEvolucao.length > 0">
-            <h3>JSON da Resposta</h3>
-            <pre>{{ dadosEvolucao | json }}</pre>
-          </div>
         </div>
       </div>
     </div>
   </div>
-</div> 
+</div>
