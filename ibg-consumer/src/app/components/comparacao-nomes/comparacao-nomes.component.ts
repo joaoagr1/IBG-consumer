@@ -1,23 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
-import { IbgeService } from '../../services/ibge.service';
-import { EvolucaoNome } from '../../services/ibge.service';
+import { EvolucaoNome, IbgeService } from '../../services/ibge.service';
+import { BaseChartComponent, FormField } from '../common/base-chart/base-chart.component';
 
 @Component({
   selector: 'app-comparacao-nomes',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgChartsModule],
+  imports: [BaseChartComponent],
   templateUrl: './comparacao-nomes.component.html',
   styleUrls: ['./comparacao-nomes.component.css']
 })
 export class ComparacaoNomesComponent implements OnInit {
-  nome1: string = '';
-  nome2: string = '';
-  sexo: string = '';
+  title = 'Comparação de Nomes';
+  submitButtonText = 'Comparar';
+
+  formData = {
+    nome1: '',
+    nome2: '',
+    sexo: ''
+  };
+
   dadosComparacao: { [key: string]: EvolucaoNome[] } = {};
+
+  formFields: FormField[] = [
+    {
+      id: 'nome1',
+      label: 'Primeiro Nome',
+      type: 'text',
+      required: true
+    },
+    {
+      id: 'nome2',
+      label: 'Segundo Nome',
+      type: 'text',
+      required: true
+    },
+    {
+      id: 'sexo',
+      label: 'Sexo',
+      type: 'select',
+      options: [
+        { value: 'M', label: 'Masculino' },
+        { value: 'F', label: 'Feminino' }
+      ]
+    }
+  ];
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
@@ -64,17 +91,14 @@ export class ComparacaoNomesComponent implements OnInit {
   constructor(private ibgeService: IbgeService) {}
 
   ngOnInit(): void {
-    // Inicializa os dados vazios para os nomes
     this.dadosComparacao = {
-      [this.nome1]: [],
-      [this.nome2]: []
+      [this.formData.nome1]: [],
+      [this.formData.nome2]: []
     };
   }
 
-  compararNomes(): void {
-
-    if (!this.nome1 || !this.nome2) return;
-
+  compararNomes(formData: any): void {
+    if (!formData.nome1 || !formData.nome2) return;
 
     this.dadosComparacao = {};
     this.lineChartData = {
@@ -99,19 +123,18 @@ export class ComparacaoNomesComponent implements OnInit {
       ]
     };
 
-
-    this.ibgeService.getEvolucaoNome(this.nome1).subscribe(
+    this.ibgeService.getEvolucaoNome(formData.nome1).subscribe(
       (data1: any[]) => {
-        this.dadosComparacao[this.nome1] = data1;
-        this.ibgeService.getEvolucaoNome(this.nome2).subscribe(
+        this.dadosComparacao[formData.nome1] = data1;
+        this.ibgeService.getEvolucaoNome(formData.nome2).subscribe(
           (data2: any[]) => {
-            this.dadosComparacao[this.nome2] = data2;
+            this.dadosComparacao[formData.nome2] = data2;
             this.lineChartData = {
               labels: data1[0].res.map((item: any) => item.periodo),
               datasets: [
                 {
                   data: data1[0].res.map((item: any) => item.frequencia),
-                  label: this.nome1,
+                  label: formData.nome1,
                   fill: true,
                   tension: 0.5,
                   borderColor: 'rgb(75, 192, 192)',
@@ -119,7 +142,7 @@ export class ComparacaoNomesComponent implements OnInit {
                 },
                 {
                   data: data2[0].res.map((item: any) => item.frequencia),
-                  label: this.nome2,
+                  label: formData.nome2,
                   fill: true,
                   tension: 0.5,
                   borderColor: 'rgb(255, 99, 132)',

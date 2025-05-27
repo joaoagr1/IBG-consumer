@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2>{{ title }}</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-container">
+            <form (ngSubmit)="onSubmit()">
+              <div class="form-group" *ngFor="let field of formFields">
+                <label [for]="field.id">{{ field.label }}</label>
+
+                <input
+                  *ngIf="field.type === 'text' || field.type === 'number'"
+                  [type]="field.type"
+                  [id]="field.id"
+                  [(ngModel)]="formData[field.id]"
+                  [name]="field.id"
+                  [placeholder]="field.placeholder || ''"
+                  [required]="field.required || false"
+                >
+
+                <select
+                  *ngIf="field.type === 'select'"
+                  [id]="field.id"
+                  [(ngModel)]="formData[field.id]"
+                  [name]="field.id"
+                  [required]="field.required || false"
+                >
+                  <option value="">Selecione</option>
+                  <option
+                    *ngFor="let option of field.options"
+                    [value]="option.value"
+                  >
+                    {{ option.label }}
+                  </option>
+                </select>
+              </div>
+              <button type="submit">{{ submitButtonText }}</button>
+            </form>
+          </div>
+
+          <div class="chart-container" *ngIf="showChart && chartData.datasets[0].data.length > 0">
+            <canvas baseChart
+              [data]="chartData"
+              [options]="chartOptions"
+              [type]="'line'">
+            </canvas>
+          </div>
+
+          <div class="table-responsive mt-4" *ngIf="showTable && tableData.length > 0">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th *ngFor="let header of tableHeaders">{{ header }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of tableData">
+                  <td *ngFor="let cell of row">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

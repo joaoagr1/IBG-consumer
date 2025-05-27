@@ -1,83 +1,10 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h2>Ranking por Localidade</h2>
-        </div>
-        <div class="card-body">
-          <div class="form-container">
-            <form (ngSubmit)="buscarRanking()">
-              <div class="form-group">
-                <label for="localidade">Localidade</label>
-                <select
-                  id="localidade"
-                  [(ngModel)]="localidade"
-                  name="localidade"
-                  required
-                >
-                  <option value="">Selecione</option>
-                  <option [value]="1100205">RO - Rondônia</option>
-                  <option [value]="1200401">AC - Acre</option>
-                  <option [value]="1302603">AM - Amazonas</option>
-                  <option [value]="1400100">RR - Roraima</option>
-                  <option [value]="1501402">PA - Pará</option>
-                  <option [value]="1600303">AP - Amapá</option>
-                  <option [value]="1702109">TO - Tocantins</option>
-                  <option [value]="2105302">MA - Maranhão</option>
-                  <option [value]="2207702">PI - Piauí</option>
-                  <option [value]="2304400">CE - Ceará</option>
-                  <option [value]="2408102">RN - Rio Grande do Norte</option>
-                  <option [value]="2507507">PB - Paraíba</option>
-                  <option [value]="2609600">PE - Pernambuco</option>
-                  <option [value]="2704302">AL - Alagoas</option>
-                  <option [value]="2800308">SE - Sergipe</option>
-                  <option [value]="2903201">BA - Bahia</option>
-                  <option [value]="3106200">MG - Minas Gerais</option>
-                  <option [value]="3205309">ES - Espírito Santo</option>
-                  <option [value]="3304557">RJ - Rio de Janeiro</option>
-                  <option [value]="3509502">SP - São Paulo</option>
-                  <option [value]="4106902">PR - Paraná</option>
-                  <option [value]="4205407">SC - Santa Catarina</option>
-                  <option [value]="4305108">RS - Rio Grande do Sul</option>
-                  <option [value]="5002704">MS - Mato Grosso do Sul</option>
-                  <option [value]="5103403">MT - Mato Grosso</option>
-                  <option [value]="5208707">GO - Goiás</option>
-                  <option [value]="5300108">DF - Distrito Federal</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="sexo">Sexo</label>
-                <select id="sexo" [(ngModel)]="sexo" name="sexo">
-                  <option value="">Selecione</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Feminino</option>
-                </select>
-              </div>
-
-              <button type="submit">Buscar</button>
-            </form>
-          </div>
-
-          <div class="table-responsive mt-4" *ngIf="dadosRanking.length > 0">
-            <table class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Frequência</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let item of dadosRanking[0]?.res.slice(0, 3)">
-                <td>{{ item.nome }}</td>
-                <td>{{ item.frequencia }}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-base-chart
+  [title]="title"
+  [formFields]="formFields"
+  [submitButtonText]="submitButtonText"
+  [showTable]="true"
+  [tableHeaders]="tableHeaders"
+  [tableData]="tableData"
+  [formData]="formData"
+  (formSubmit)="buscarRanking($event)">
+</app-base-chart>

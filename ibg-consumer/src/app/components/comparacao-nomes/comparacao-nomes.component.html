@@ -1,25 +1,10 @@
-<div class="container">
-  <div class="form-container">
-    <h2>Comparação de Nomes</h2>
-    <form (ngSubmit)="compararNomes()">
-      <div class="form-group">
-        <label for="nome1">Primeiro Nome:</label>
-        <input type="text" id="nome1" [(ngModel)]="nome1" name="nome1" required>
-      </div>
-      <div class="form-group">
-        <label for="nome2">Segundo Nome:</label>
-        <input type="text" id="nome2" [(ngModel)]="nome2" name="nome2" required>
-      </div>
-      <button type="submit">Comparar</button>
-    </form>
-  </div>
-
-  <div class="chart-container" *ngIf="lineChartData.datasets[0].data.length > 0">
-    <h3>Gráfico de Comparação</h3>
-    <canvas baseChart
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [type]="'line'">
-    </canvas>
-  </div>
-</div>
+<app-base-chart
+  [title]="title"
+  [formFields]="formFields"
+  [submitButtonText]="submitButtonText"
+  [showChart]="true"
+  [chartData]="lineChartData"
+  [chartOptions]="lineChartOptions"
+  [formData]="formData"
+  (formSubmit)="compararNomes($event)">
+</app-base-chart>
