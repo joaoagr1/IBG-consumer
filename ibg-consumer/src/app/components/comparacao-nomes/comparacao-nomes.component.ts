@@ -17,7 +17,6 @@ export class ComparacaoNomesComponent implements OnInit {
   formData = {
     nome1: '',
     nome2: '',
-    sexo: ''
   };
 
   dadosComparacao: { [key: string]: EvolucaoNome[] } = {};
@@ -34,15 +33,6 @@ export class ComparacaoNomesComponent implements OnInit {
       label: 'Segundo Nome',
       type: 'text',
       required: true
-    },
-    {
-      id: 'sexo',
-      label: 'Sexo',
-      type: 'select',
-      options: [
-        { value: 'M', label: 'Masculino' },
-        { value: 'F', label: 'Feminino' }
-      ]
     }
   ];
 
