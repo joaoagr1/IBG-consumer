@@ -20,8 +20,15 @@ export class IbgeService {
 
   constructor(private http: HttpClient) {}
 
-  getEvolucaoNome(nome: string, sexo: string): Observable<EvolucaoNome[]> {
-    return this.http.get<EvolucaoNome[]>(`${this.baseUrl}/${nome}?sexo=${sexo}`);
+  getEvolucaoNome(nome: string, sexo?: string): Observable<EvolucaoNome[]> {
+    console.log("EvolucaoNome", nome, sexo);
+
+    let url = `${this.baseUrl}/${nome}`;
+    if (sexo) {
+      url += `?sexo=${sexo}`;
+    }
+
+    return this.http.get<EvolucaoNome[]>(url);
   }
 
   getRankingLocalidade(localidade: string, sexo: string): Observable<RankingLocalidade[]> {

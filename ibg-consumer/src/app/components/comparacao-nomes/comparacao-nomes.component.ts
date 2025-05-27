@@ -72,9 +72,10 @@ export class ComparacaoNomesComponent implements OnInit {
   }
 
   compararNomes(): void {
-    if (!this.nome1 || !this.nome2 || !this.sexo) return;
 
-    // Limpa os dados anteriores
+    if (!this.nome1 || !this.nome2) return;
+
+
     this.dadosComparacao = {};
     this.lineChartData = {
       labels: [],
@@ -98,10 +99,11 @@ export class ComparacaoNomesComponent implements OnInit {
       ]
     };
 
-    this.ibgeService.getEvolucaoNome(this.nome1, this.sexo).subscribe(
+
+    this.ibgeService.getEvolucaoNome(this.nome1).subscribe(
       (data1: any[]) => {
         this.dadosComparacao[this.nome1] = data1;
-        this.ibgeService.getEvolucaoNome(this.nome2, this.sexo).subscribe(
+        this.ibgeService.getEvolucaoNome(this.nome2).subscribe(
           (data2: any[]) => {
             this.dadosComparacao[this.nome2] = data2;
             this.lineChartData = {

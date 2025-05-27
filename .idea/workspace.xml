@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56886243-287c-4bd7-b6b4-4001ac8a2798" name="Changes" comment="implementando com angular">
+    <list default="true" id="56886243-287c-4bd7-b6b4-4001ac8a2798" name="Changes" comment="ajustes finais">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/nome-evolucao/nome-evolucao.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/nome-evolucao/nome-evolucao.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/nome-evolucao/nome-evolucao.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/nome-evolucao/nome-evolucao.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/ranking-localidade/ranking-localidade.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibg-consumer/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/comparacao-nomes/comparacao-nomes.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/comparacao-nomes/comparacao-nomes.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/components/comparacao-nomes/comparacao-nomes.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/components/comparacao-nomes/comparacao-nomes.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ibg-consumer/src/app/services/ibge.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ibg-consumer/src/app/services/ibge.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +53,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\Usuário\\Desktop\\IBG-consumer\\ibg-consumer\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Code\\IBG-consumer\\ibg-consumer\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -94,6 +92,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="implementando com angular" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementando com angular" />
+    <MESSAGE value="ajustes finais" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajustes finais" />
   </component>
 </project>
