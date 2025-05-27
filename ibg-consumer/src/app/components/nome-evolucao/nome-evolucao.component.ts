@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { NgChartsModule } from 'ng2-charts';
 import { IbgeService } from '../../services/ibge.service';
-import { EvolucaoNome } from '../../services/ibge.service';
 
 @Component({
   selector: 'app-nome-evolucao',
