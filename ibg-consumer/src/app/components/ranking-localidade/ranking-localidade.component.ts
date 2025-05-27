@@ -16,40 +16,7 @@ import { RankingLocalidade } from '../../services/ibge.service';
 export class RankingLocalidadeComponent implements OnInit {
   localidade: string = '';
   sexo: string = '';
-  dadosRanking: RankingLocalidade[] = [];
-
-  public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        label: 'Frequência',
-        backgroundColor: 'rgba(75, 192, 192, 0.3)',
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 1
-      }
-    ]
-  };
-
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Frequência'
-        }
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Nome'
-        }
-      }
-    }
-  };
+  dadosRanking: any[] = [];
 
   constructor(private ibgeService: IbgeService) {}
 
@@ -62,25 +29,10 @@ export class RankingLocalidadeComponent implements OnInit {
       (data: any[]) => {
 
         this.dadosRanking = data;
-        const resultados = data[0].res.splice(0, 3);
-
-        this.barChartData = {
-          labels: resultados.map((item: any) => item.nome),
-          datasets: [
-            {
-              data: resultados.map((item: any) => item.frequencia),
-              label: 'Frequência',
-              backgroundColor: 'rgba(75, 192, 192, 0.3)',
-              borderColor: 'rgb(75, 192, 192)',
-              borderWidth: 1
-            }
-          ]
-        };
       },
       (error: Error) => {
         console.error('Erro ao buscar dados:', error);
       }
     );
-
   }
 }

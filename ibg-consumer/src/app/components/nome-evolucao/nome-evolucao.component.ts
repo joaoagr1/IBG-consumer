@@ -16,14 +16,15 @@ import { EvolucaoNome } from '../../services/ibge.service';
 export class NomeEvolucaoComponent implements OnInit {
   nome: string = '';
   sexo: string = '';
-  dadosEvolucao: EvolucaoNome[] = [];
+  de: any;
+  ate: any;
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
     datasets: [
       {
         data: [],
-        label: 'Frequência',
+        label: 'Evolução',
         fill: true,
         tension: 0.5,
         borderColor: 'rgb(75, 192, 192)',
@@ -61,13 +62,22 @@ export class NomeEvolucaoComponent implements OnInit {
 
     this.ibgeService.getEvolucaoNome(this.nome, this.sexo).subscribe(
       (data: any) => {
-        this.dadosEvolucao = data;
-        console.log(data)
+
+        const newData = data[0].res.filter((item: any) => {
+          const match = item.periodo.match(/\d{4}/g);
+
+          if (match) {
+            const periodoInicio = parseInt(match[0]);
+            return periodoInicio >= this.de && periodoInicio <= this.ate;
+          }
+          return false;
+        });
+
         this.lineChartData = {
-          labels: data[0].res.map((item: any) => item.periodo),
+          labels: newData.map((item: any) => item.periodo),
           datasets: [
             {
-              data: data[0].res.map((item: any) => item.frequencia),
+              data: newData.map((item: any) => item.frequencia),
               label: `Frequência do nome ${this.nome}`,
               fill: true,
               tension: 0.5,

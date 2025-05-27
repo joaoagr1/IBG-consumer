@@ -21,11 +21,10 @@ export class IbgeService {
   constructor(private http: HttpClient) {}
 
   getEvolucaoNome(nome: string, sexo: string): Observable<EvolucaoNome[]> {
-    console.log(`${this.baseUrl}/${nome}?sexo=${sexo}`);
     return this.http.get<EvolucaoNome[]>(`${this.baseUrl}/${nome}?sexo=${sexo}`);
   }
 
   getRankingLocalidade(localidade: string, sexo: string): Observable<RankingLocalidade[]> {
     return this.http.get<RankingLocalidade[]>(`${this.baseUrl}/ranking?localidade=${localidade}&sexo=${sexo}`);
   }
-} 
+}

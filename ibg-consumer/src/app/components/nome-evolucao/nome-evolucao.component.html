@@ -15,20 +15,39 @@
                   id="nome"
                   [(ngModel)]="nome"
                   name="nome"
-                  placeholder="Digite o nome"
+                  placeholder="Digite um nome"
                   required
                 >
               </div>
               <div class="form-group">
                 <label for="sexo">Sexo</label>
-                <select
-                  id="sexo"
-                  [(ngModel)]="sexo"
-                  name="sexo"
-                >
+                <select id="sexo" [(ngModel)]="sexo" name="sexo">
+                  <option value="">Selecione</option>
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="de">De</label>
+                <input
+                  type="number"
+                  id="de"
+                  [(ngModel)]="de"
+                  name="de"
+                  placeholder="Digite uma década"
+                  required
+                >
+              </div>
+              <div class="form-group">
+                <label for="ate">Até</label>
+                <input
+                  type="number"
+                  id="ate"
+                  [(ngModel)]="ate"
+                  name="ate"
+                  placeholder="Digite uma década"
+                  required
+                >
               </div>
               <button type="submit">Buscar</button>
             </form>
